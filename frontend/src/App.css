@@ -1,0 +1,291 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.25rem;
+}
+
+.sidebar {
+  width: 250px;
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: linear-gradient(180deg, #e8f0ff 0%, #ffffff 55%);
+}
+
+.sidebar-title {
+  font-size: 1.25rem;
+}
+
+.sidebar-subtitle {
+  font-size: 0.88rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.sidebar-link {
+  padding: 0.6rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.sidebar-link:hover {
+  background: #eef4ff;
+}
+
+.sidebar-link-active {
+  background: #d9e7ff;
+  border-color: #bdd3ff;
+  color: #16479a;
+}
+
+.header {
+  margin: 1rem 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.2rem;
+}
+
+.header-user {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-muted);
+}
+
+.spinner-wrap {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid #d0dbef;
+  border-top-color: #2c6ce0;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.progress-wrap {
+  position: relative;
+  margin-top: 0.6rem;
+  height: 12px;
+  border-radius: 999px;
+  background: #ecf1fa;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3a83f0, #5cb5ff);
+}
+
+.progress-label {
+  position: absolute;
+  right: 6px;
+  top: -20px;
+  font-size: 0.73rem;
+  color: var(--muted);
+}
+
+.topic-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.topic-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.topic-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.list-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.7rem;
+  background: #ffffff;
+}
+
+.link-item {
+  color: var(--primary);
+}
+
+.table-head,
+.table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr 1fr;
+  gap: 0.5rem;
+  padding: 0.65rem 0;
+}
+
+.table-head {
+  border-bottom: 1px solid var(--border);
+}
+
+.table-row {
+  border-bottom: 1px solid #edf1f7;
+  font-size: 0.94rem;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-window {
+  min-height: 340px;
+  max-height: 460px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.chat-message {
+  max-width: 85%;
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+}
+
+.chat-message p {
+  margin-top: 0.25rem;
+}
+
+.chat-message-student {
+  align-self: flex-end;
+  background: #e7f0ff;
+  border-color: #c5d9ff;
+}
+
+.chat-message-ai {
+  align-self: flex-start;
+  background: #ffffff;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.curriculum-module {
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.curriculum-module h4 {
+  margin-bottom: 0.25rem;
+}
+
+.curriculum-module ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1rem;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: auto;
+    margin: 1rem 1rem 0;
+  }
+
+  .sidebar-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .header {
+    margin-top: 0.75rem;
+  }
+
+  .table-head,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .chat-input {
+    flex-direction: column;
+  }
+
+  .app-content {
+    padding: 1rem;
+  }
+}
