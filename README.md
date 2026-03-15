@@ -1,75 +1,97 @@
 # AI_LEARN
 
-AI_LEARN is an AI-powered learning platform with a Spring Boot backend and React (Vite) frontend.
-It supports curriculum generation, topic-based learning notes, video link generation, quizzes, and doubt workflows.
+## Short Description
+AI_LEARN is an AI-powered learning platform that generates personalized curricula, converts them into topics, creates structured study notes and video links with Groq, and supports quizzes and doubt handling.
 
-## Tech Stack
+## Features
+- Curriculum generation (Semester and Personal planners)
+- Save curriculum as structured learning topics
+- Topic-wise AI notes generation (JSON-backed)
+- AI-generated video links per topic
+- Quiz generation, submission, and history
+- Doubt ask and history flow
 
+## Tech Stack / Technologies Used
 - Backend: Java 17, Spring Boot 3.3.5, Spring Data JPA, MySQL
 - Frontend: React 19, Vite 7, Axios, React Router
-- AI Integrations: CurricuForge endpoints + Groq (for notes/video links)
+- AI: CurricuForge integration + Groq API
 
 ## Project Structure
+```text
+AI_LEARN/
+   backend/
+      backend/                 # Spring Boot backend
+   frontend/                  # React + Vite frontend
+   README.md
+```
 
-- `backend/backend` - Spring Boot API
-- `frontend` - React web app
-
-## Prerequisites
-
+## Installation / Setup Instructions
+### Prerequisites
 - Java 17+
-- Maven Wrapper (included)
 - Node.js 18+
 - MySQL running locally
 
-## Backend Setup
+### 1) Database setup
+- Create database: `ai_learning_platform`
+- Update DB config if needed in `backend/backend/src/main/resources/application.properties`
 
-1. Configure MySQL database:
-   - Database name: `ai_learning_platform`
-   - Update credentials in `backend/backend/src/main/resources/application.properties` if needed.
-
-2. Add local secrets in `backend/backend/.env`:
-
+### 2) Backend environment setup
+Create `backend/backend/.env`:
 ```properties
 GROQ_API_KEY=your_groq_api_key
 ```
 
-3. Run backend:
-
-```powershell
-cd backend/backend
-.\mvnw.cmd spring-boot:run
-```
-
-Backend runs on `http://localhost:8080`.
-
-## Frontend Setup
-
-1. Install dependencies:
-
+### 3) Install frontend dependencies
 ```powershell
 cd frontend
 npm.cmd install
 ```
 
-2. Start dev server:
-
+## How to Run the Project
+### Run backend
 ```powershell
+cd backend/backend
+.\mvnw.cmd spring-boot:run
+```
+Backend URL: `http://localhost:8080`
+
+### Run frontend
+```powershell
+cd frontend
 npm.cmd run dev
 ```
+Frontend URL: `http://localhost:5173`
 
-Frontend runs on `http://localhost:5173`.
+## API Endpoints
+### Curriculum
+- `POST /curriculum/generate`
+- `POST /curriculum/generate-mock`
+- `POST /curriculum/refine`
+- `GET /curriculum/{studentId}`
+- `POST /curriculum/{curriculumId}/save-topics`
 
-## Key Features
+### Topics / Learning
+- `GET /topics`
+- `GET /learning/{topicId}`
+- `POST /learning/{topicId}/generate-notes`
 
-- Curriculum generation (semester/personal planners)
-- Topic extraction and grouped topic view
-- Structured AI notes generation (JSON-backed)
-- AI-generated topic video links
-- Quiz generation and history
-- Doubt support flow
+### Quiz
+- `POST /quiz/generate`
+- `POST /quiz/submit`
+- `GET /quiz/history/{studentId}`
 
-## Notes
+### Doubts
+- `POST /doubts/ask`
+- `GET /doubts/history/{studentId}`
 
-- API keys are loaded from `.env`; do not commit secrets.
-- `backend/backend/.gitignore` excludes `.env`.
-- Generated notes and video links are persisted and reloaded on revisit.
+## Screenshots or Demo
+- Add screenshots/GIFs of Dashboard, Curriculum, Learning Notes, and Quiz pages.
+
+## Future Improvements / Roadmap
+- Better notes formatting and section-level rendering polish
+- Prompt chaining for deeper notes quality
+- Enhanced quiz intelligence and adaptive difficulty
+- Production deployment and CI/CD pipeline
+
+## Author / Credits
+- Rayaan
