@@ -167,3 +167,236 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+/* Topic Grid Styles */
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.topic-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.topic-button:hover {
+  border-color: var(--primary);
+  background: var(--card-muted);
+  box-shadow: var(--shadow-md);
+}
+
+.topic-button strong {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.topic-button small {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Doubt Form Container */
+.doubt-form-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.doubt-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.doubt-form-header h3 {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.back-button,
+.new-doubt-button {
+  padding: 0.5rem 1rem;
+  background: var(--card-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--primary);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover,
+.new-doubt-button:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.back-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Doubt Input Area */
+.doubt-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.doubt-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.doubt-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Result Card */
+.result-card {
+  background: var(--card-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.result-header,
+.result-body {
+  margin-bottom: 1.5rem;
+}
+
+.result-header h4,
+.result-body h4 {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.result-header p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 6px;
+  margin-bottom: 0;
+}
+
+.ai-answer {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary);
+  line-height: 1.7;
+  color: var(--text);
+  font-size: 0.95rem;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Doubt History */
+.doubt-history {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.doubt-history h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-item {
+  background: var(--card-muted);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+}
+
+.history-date {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.history-item p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.history-item p strong {
+  color: var(--primary);
+}
+
+.history-item p:last-child {
+  margin-bottom: 0;
+}

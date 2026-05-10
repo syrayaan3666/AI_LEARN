@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rayaan.ailearn.dto.response.VideoResourceResponse;
 import com.rayaan.ailearn.model.Topic;
 
 @Service
@@ -66,7 +67,7 @@ public class NotesAiAgent {
         }
     }
 
-    public List<String> generateVideoLinksForTopic(Topic topic) {
+    public List<VideoResourceResponse> generateVideoLinksForTopic(Topic topic) {
         logger.info("Generating video links for topic: {}", topic.getName());
 
         if (groqApiKey == null || groqApiKey.isBlank()) {
@@ -162,13 +163,21 @@ public class NotesAiAgent {
 
                                 Return ONLY valid JSON with this exact schema:
                                 {
-                                    "video_links": ["https://...", "https://...", "https://..."]
+                                    "video_links": [
+                                        {
+                                            "title": "string",
+                                            "url": "https://..."
+                                        }
+                                    ]
                                 }
 
                                 Rules:
-                                - Provide 4 to 6 high-quality links relevant to the topic.
-                                - Prefer YouTube educational links.
+                                - Provide 4 to 6 high-quality links most closely related to the topic.
+                                - Prefer educational YouTube links with clear teaching value.
+                                - Prioritize links that are likely currently available (not deleted/private/unlisted-only dead links).
+                                - Use direct watch URLs when possible.
                                 - No duplicate links.
+                                - Each item must include a short, accurate title.
                                 - No extra keys.
                                 - No markdown, no explanation.
                                 """,
@@ -320,7 +329,7 @@ public class NotesAiAgent {
         }
     }
 
-    private List<String> extractVideoLinks(String rawJson) {
+    private List<VideoResourceResponse> extractVideoLinks(String rawJson) {
         try {
             if (rawJson == null || rawJson.isBlank()) {
                 return List.of();
@@ -331,12 +340,14 @@ public class NotesAiAgent {
                 return List.of();
             }
 
-            List<String> links = new ArrayList<>();
+            List<VideoResourceResponse> links = new ArrayList<>();
             for (JsonNode linkNode : linksNode) {
-                String link = linkNode.asText("").trim();
-                if (link.startsWith("http://") || link.startsWith("https://")) {
-                    if (!links.contains(link)) {
-                        links.add(link);
+                String url = linkNode.path("url").asText("").trim();
+                String title = linkNode.path("title").asText("").trim();
+                if ((url.startsWith("http://") || url.startsWith("https://")) && !title.isBlank()) {
+                    boolean exists = links.stream().anyMatch(link -> url.equals(link.url()));
+                    if (!exists) {
+                        links.add(new VideoResourceResponse(title, url));
                     }
                 }
             }

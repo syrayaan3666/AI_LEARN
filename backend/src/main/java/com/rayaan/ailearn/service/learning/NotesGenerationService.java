@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.rayaan.ailearn.dto.response.VideoResourceResponse;
 import com.rayaan.ailearn.model.Topic;
 
 @Service
@@ -20,7 +21,7 @@ public class NotesGenerationService {
         return notesAiAgent.generateNotesForTopic(topic);
     }
 
-    public List<String> generateVideoLinksForTopic(Topic topic) {
+    public List<VideoResourceResponse> generateVideoLinksForTopic(Topic topic) {
         return notesAiAgent.generateVideoLinksForTopic(topic);
     }
 
@@ -28,11 +29,11 @@ public class NotesGenerationService {
         return "Auto-generated starter notes for " + topic.getName() + ". Focus on core concepts, examples, and quiz practice.";
     }
 
-    public List<String> generatePlaceholderResources(Topic topic) {
+    public List<VideoResourceResponse> generatePlaceholderResources(Topic topic) {
         String base = topic.getName().replace(' ', '+');
         return List.of(
-                "https://www.youtube.com/results?search_query=" + base,
-                "https://www.google.com/search?q=" + base + "+tutorial"
+                new VideoResourceResponse("YouTube results for " + topic.getName(), "https://www.youtube.com/results?search_query=" + base),
+                new VideoResourceResponse("Google tutorial search for " + topic.getName(), "https://www.google.com/search?q=" + base + "+tutorial")
         );
     }
 }

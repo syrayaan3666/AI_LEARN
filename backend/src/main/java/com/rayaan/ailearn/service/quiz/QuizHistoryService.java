@@ -1,11 +1,15 @@
 package com.rayaan.ailearn.service.quiz;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rayaan.ailearn.dto.response.QuizHistoryResponse;
 import com.rayaan.ailearn.repository.QuizAttemptRepository;
-import java.util.List;
-import org.springframework.stereotype.Service;
 
 @Service
+@Transactional(readOnly = true)
 public class QuizHistoryService {
 
     private final QuizAttemptRepository quizAttemptRepository;

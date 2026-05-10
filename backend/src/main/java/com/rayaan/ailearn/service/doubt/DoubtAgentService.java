@@ -1,5 +1,12 @@
 package com.rayaan.ailearn.service.doubt;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rayaan.ailearn.dto.request.DoubtAskRequest;
 import com.rayaan.ailearn.dto.response.DoubtAskResponse;
 import com.rayaan.ailearn.dto.response.DoubtHistoryResponse;
@@ -11,10 +18,6 @@ import com.rayaan.ailearn.repository.DoubtRepository;
 import com.rayaan.ailearn.repository.TopicRepository;
 import com.rayaan.ailearn.repository.UserRepository;
 import com.rayaan.ailearn.service.intelligence.LLMRouterService;
-import java.time.LocalDateTime;
-import java.util.List;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DoubtAgentService {
@@ -23,14 +26,14 @@ public class DoubtAgentService {
     private final UserRepository userRepository;
     private final TopicRepository topicRepository;
     private final ContextBuilderService contextBuilderService;
-    private final LLMRouterService llmRouterService;
+    private final Optional<LLMRouterService> llmRouterService;
 
     public DoubtAgentService(
             DoubtRepository doubtRepository,
             UserRepository userRepository,
             TopicRepository topicRepository,
             ContextBuilderService contextBuilderService,
-            LLMRouterService llmRouterService
+            Optional<LLMRouterService> llmRouterService
     ) {
         this.doubtRepository = doubtRepository;
         this.userRepository = userRepository;
@@ -47,7 +50,9 @@ public class DoubtAgentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Topic not found: " + request.topicId()));
 
         String context = contextBuilderService.build(user.getId(), topic, request.doubtText());
-        String aiAnswer = llmRouterService.ask(request.doubtText(), context);
+        String aiAnswer = llmRouterService.isPresent() 
+            ? llmRouterService.get().ask(request.doubtText(), context)
+            : generateFallbackAnswer(topic, request.doubtText());
 
         Doubt doubt = new Doubt();
         doubt.setUser(user);
@@ -60,8 +65,16 @@ public class DoubtAgentService {
 
         return new DoubtAskResponse(doubt.getId(), aiAnswer);
     }
+    
+    private String generateFallbackAnswer(Topic topic, String doubtText) {
+        return "Based on the topic '" + topic.getName() + "', here's a response about your doubt:\n\n"
+                + "Your doubt: " + doubtText + "\n\n"
+                + "To get a more detailed AI-powered answer, please ensure the LLM service is configured.";
+    }
 
     public List<DoubtHistoryResponse> getHistory(Long studentId) {
+        userRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found: " + studentId));
         return doubtRepository.findByUserIdOrderByCreatedAtDesc(studentId)
                 .stream()
                 .map(doubt -> new DoubtHistoryResponse(

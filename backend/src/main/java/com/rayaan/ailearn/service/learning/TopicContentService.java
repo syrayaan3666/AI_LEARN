@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rayaan.ailearn.dto.response.LearningContentResponse;
 import com.rayaan.ailearn.dto.response.TopicResponse;
+import com.rayaan.ailearn.dto.response.VideoResourceResponse;
 import com.rayaan.ailearn.exception.ResourceNotFoundException;
 import com.rayaan.ailearn.model.Topic;
 import com.rayaan.ailearn.model.TopicContent;
@@ -66,7 +67,7 @@ public class TopicContentService {
         TopicContent content = topicContentRepository.findByTopicId(topicId)
                 .orElseGet(() -> createPlaceholderContent(topic));
 
-        List<String> links = parseLinks(content.getResourcesJson());
+        List<VideoResourceResponse> links = parseLinks(content.getResourcesJson());
         Map<String, Object> notesJson = parseNotesJson(content.getNotesJson());
         return new LearningContentResponse(topic.getId(), topic.getName(), content.getNotes(), links, notesJson);
     }
@@ -95,7 +96,7 @@ public class TopicContentService {
         content.setUpdatedAt(LocalDateTime.now());
 
         // Generate video links from LLM and overwrite any previous links.
-        List<String> generatedVideoLinks = notesGenerationService.generateVideoLinksForTopic(topic);
+        List<VideoResourceResponse> generatedVideoLinks = notesGenerationService.generateVideoLinksForTopic(topic);
         if (!generatedVideoLinks.isEmpty()) {
             try {
                 content.setResourcesJson(objectMapper.writeValueAsString(generatedVideoLinks));
@@ -113,7 +114,7 @@ public class TopicContentService {
         content = topicContentRepository.save(content);
         logger.info("Saved generated notes for topic: {}", topic.getName());
 
-        List<String> links = parseLinks(content.getResourcesJson());
+        List<VideoResourceResponse> links = parseLinks(content.getResourcesJson());
         Map<String, Object> notesJson = parseNotesJson(content.getNotesJson());
         return new LearningContentResponse(topic.getId(), topic.getName(), content.getNotes(), links, notesJson);
     }
@@ -183,11 +184,26 @@ public class TopicContentService {
         }
     }
 
-    private List<String> parseLinks(String json) {
+    private List<VideoResourceResponse> parseLinks(String json) {
         try {
             if (json == null || json.isBlank()) {
                 return List.of();
             }
+            com.fasterxml.jackson.databind.JsonNode root = objectMapper.readTree(json);
+            if (!root.isArray() || root.isEmpty()) {
+                return List.of();
+            }
+
+            // Legacy format support: ["https://..."]
+            if (root.get(0).isTextual()) {
+                List<String> rawLinks = objectMapper.readValue(json, new TypeReference<>() {});
+                return rawLinks.stream()
+                        .filter(link -> link != null && !link.isBlank())
+                        .map(link -> new VideoResourceResponse(link, link))
+                        .toList();
+            }
+
+            // New format support: [{"title":"...","url":"..."}]
             return objectMapper.readValue(json, new TypeReference<>() {});
         } catch (JsonProcessingException ex) {
             return List.of();

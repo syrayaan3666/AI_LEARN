@@ -7,7 +7,7 @@ public record LearningContentResponse(
         Long topicId,
         String topicTitle,
         String notes,
-        List<String> videoLinks,
+        List<VideoResourceResponse> videoLinks,
         Map<String, Object> notesJson
 ) {
 }

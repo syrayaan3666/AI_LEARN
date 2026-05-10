@@ -1,10 +1,12 @@
 package com.rayaan.ailearn.model;
 
+import java.time.LocalDateTime;
+
 import com.rayaan.ailearn.model.enums.MasteryStatus;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "student_topic_progress")
@@ -33,7 +34,7 @@ public class StudentTopicProgress {
     @Column(name = "mastery_score")
     private Double masteryScore;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = com.rayaan.ailearn.model.converter.MasteryStatusConverter.class)
     @Column(name = "status")
     private MasteryStatus status;
 

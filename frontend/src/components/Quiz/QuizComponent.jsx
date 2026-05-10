@@ -38,6 +38,7 @@ function QuizComponent({
           <h3 className="card-title">Evaluation Result</h3>
           <p>
             Score: <strong>{result.score ?? "currently nothing here"}</strong>
+            {result.maxScore != null ? ` / ${result.maxScore}` : ""}
           </p>
           {result.feedback ? (
             <p className="muted">Feedback: {result.feedback}</p>

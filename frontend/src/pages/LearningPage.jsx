@@ -23,6 +23,25 @@ function LearningPage() {
     return value;
   }
 
+  function normalizeVideoLinks(value) {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+    return value
+      .map((item) => {
+        if (typeof item === "string") {
+          return { title: item, url: item };
+        }
+        const url = item?.url || "";
+        const title = item?.title || url;
+        if (!url) {
+          return null;
+        }
+        return { title, url };
+      })
+      .filter(Boolean);
+  }
+
   function renderStructuredNotes(notesJson) {
     if (!notesJson) {
       return null;
@@ -176,9 +195,7 @@ function LearningPage() {
     try {
       const data = await getLearningByTopic(topicId, { forceGenerate });
       const notes = data?.notes || data?.generatedNotes || "";
-      const resolvedVideoLinks = Array.isArray(data?.videoLinks)
-        ? data.videoLinks
-        : [];
+      const resolvedVideoLinks = normalizeVideoLinks(data?.videoLinks);
       setContent({
         topicTitle:
           data?.topicTitle || activeTopic?.name || "currently nothing here",
@@ -206,13 +223,15 @@ function LearningPage() {
     try {
       const data = await generateNotesForTopic(topicId);
       const notes = data?.notes || data?.generatedNotes || "";
+      const resolvedVideoLinks = normalizeVideoLinks(data?.videoLinks);
       setContent({
         topicTitle:
           data?.topicTitle || activeTopic?.name || "currently nothing here",
         notes: notes || "currently nothing here",
         notesJson: normalizeNotesJson(data?.notesJson),
-        videoLinks: Array.isArray(data?.videoLinks) ? data.videoLinks : [],
+        videoLinks: resolvedVideoLinks,
       });
+      setShowVideoSection(resolvedVideoLinks.length > 0);
     } catch (error) {
       // Show error in notes
       setContent((prev) => ({
@@ -262,13 +281,13 @@ function LearningPage() {
             {(content?.videoLinks || []).length ? (
               (content?.videoLinks || []).map((link) => (
                 <a
-                  key={link}
-                  href={link}
+                  key={link.url}
+                  href={link.url}
                   target="_blank"
                   rel="noreferrer"
                   className="list-item link-item"
                 >
-                  {link}
+                  {link.title}
                 </a>
               ))
             ) : (

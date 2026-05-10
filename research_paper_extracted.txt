@@ -1,0 +1,565 @@
+. 
+. 
+Latest updates: hps://dl.acm.org/doi/10.1145/3722237.3722268
+. 
+. 
+RESEARCH-ARTICLE
+Agent4EDU: Advancing AI for Education with Agentic Workflows
+LING DAI, East China Normal University, Shanghai, China
+. 
+YUANHAO JIANG, East China Normal University, Shanghai, China
+. 
+YUANYUAN CHEN, East China Normal University, Shanghai, China
+. 
+ZINUO GUO, East China Normal University, Shanghai, China
+. 
+TIANYI LIU, Jiangsu University of Science and Technology, Zhenjiang, Jiangsu, China
+. 
+XIAOBAO SHAO, East China Normal University, Shanghai, China
+. 
+. 
+. 
+Open Access Support provided by:
+. 
+East China Normal University
+. 
+Jiangsu University of Science and Technology
+. 
+PDF Download
+3722237.3722268.pdf
+14 February 2026
+Total Citations: 1
+Total Downloads: 1481
+. 
+. 
+Published: 22 November 2024
+. 
+. 
+Citation in BibTeX format
+. 
+. 
+ICAIE 2024: 2024 3rd International
+Conference on Artificial Intelligence and
+Education
+November 22 - 24, 2024
+Xiamen, China
+. 
+. 
+ICAIE '24: Proceedings of the 2024 3rd International Conference on Artiﬁcial Intelligence and Education (November 2024)
+hps://doi.org/10.1145/3722237.3722268
+ISBN: 9798400712692
+.
+
+
+Agent4EDU: Advancing AI for Education with Agentic Workflows
+Ling Dai
+Department of Education
+East China Normal University
+Shanghai, China
+National Institute of Education
+Nanyang Technological University
+Singapore, Singapore
+perfectdaring@outlook.com
+Yuan-Hao Jiang∗
+Shanghai Institute of Artificial
+Intelligence for Education
+East China Normal University
+Shanghai, China
+Graduate School
+Shanghai Jiao Tong University
+Shanghai, China
+School of Computer Science and
+Technology
+East China Normal University
+Shanghai, China
+Lab of Artificial Intelligence for
+Education
+East China Normal University
+Shanghai, China
+yuanhao.cs.edu@gmail.com
+Yuanyuan Chen
+Department of Education
+East China Normal University
+Shanghai, China
+52284108004@stu.ecnu.edu.cn
+Zinuo Guo
+School of Computer Science and
+Technology
+East China Normal University
+Shanghai, China
+51275901001@stu.ecnu.edu.cn
+Tian-Yi Liu
+School of Computer
+Jiangsu University of Science and
+Technology
+Zhenjiang, China
+231210704104@stu.just.edu.cn
+Xiaobao Shao
+School of Computer Science and
+Technology
+East China Normal University
+Shanghai, China
+syhjjj@126.com
+Abstract
+The vigorous development of artificial intelligence (AI) represented
+by large language models (LLMs) has rapidly promoted the updat-
+ing and development of educational technology. Agentic workflows
+(A Ws) built based on LLMs can realize complex tasks in the field
+of education, which allows the emergence of swarm intelligence
+(SI) through multi-agent collaboration [1]. This study introduces
+the Agent4EDU (agent for education) framework, which outlines 4
+application models in education from the two dimensions of degree
+of agency and degree of interaction, including human-AI collabo-
+ration, AI assistant, instruction execution, and general type. The
+proposed Agent4EDU framework discusses the paradigm of educa-
+tional applications of AI agents and promotes the development of
+the field of AI for education.
+∗Corresponding author.
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+ICAIE 2024, Xiamen, China
+© 2024 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM ISBN 979-8-4007-1269-2/2024/11
+https://doi.org/10.1145/3722237.3722268
+CCS Concepts
+• Applied computing → Education; Interactive learning envi-
+ronments; • Human-centered computing → Human computer
+interaction (HCI); Interaction paradigms.
+Keywords
+AI for education, agentic workflow, multi-agent system, AI agent,
+large language model
+ACM Reference Format:
+Ling Dai, Yuan-Hao Jiang, Yuanyuan Chen, Zinuo Guo, Tian-Yi Liu, and Xi-
+aobao Shao. 2024. Agent4EDU: Advancing AI for Education with Agentic
+Workflows. In 2024 3rd International Conference on Artificial Intelligence and
+Education (ICAIE 2024), November 22–24, 2024, Xiamen, China. ACM, New
+York, NY, USA, 6 pages. https://doi.org/10.1145/3722237.3722268
+1 Introduction
+Large language models (LLMs) have been widely used in natural
+language processing, computer vision and other fields due to their
+powerful generative capabilities. Many researchers have also ap-
+plied LLMs to the field of education, exploring the application of
+generative artificial intelligence in learning resource generation,
+Socratic dialogue and other aspects. Equation 1) outlines the gen-
+eral LLM calling method, which takes human thoughts and specific
+needs as inputs and uses the Transformer included in the LLM to
+process these inputs to obtain the generated output. By integrating
+180
+
+ICAIE 2024, November 22–24, 2024, Xiamen, China Ling Dai et al.
+Figure 1: Framework Diagram of Agentic Workflows
+users’ ideas and needs, LLM can effectively respond to users.
+{ $DC?DC !!" = Transformer(=?DC )
+s.t.=?DC = Human(8340B, =443B 43D ) (1)
+LLMs-based agents have the ability to learn, make decisions, and
+collaborate autonomously, which enables them to handle complex
+educational tasks and explore potential development paths for fu-
+ture education in large-scale personalized learning. Equation 2)
+shows the process of a learner handling educational tasks by inter-
+acting with an LLM-based agent, where the learner mainly gives
+feedback on the agent’s output. By providing ideas and educational
+needs to the autonomous agent, the learner and agent can continu-
+ously improve the final output together in the process of ”AI-based
+questioning and learning” with the agent. This workflow shows
+how agents and learners can collaborate in the field of education.
+{ $DC?DC ) 402ℎ&(CD3 ~ = 443102: (* B4A, 64=C (!!" (=?DC )))
+s.t.=?DC = D<0= (8340B, =443B 43D )
+(2)
+In order to formally discuss the application mode of LLM-based
+agents in education, we proposed the Agent4EDU framework,
+which aims to improve educational practice by using an agentic
+workflow (A W) based on multi-agent collaboration. Figure 1 shows
+the framework diagram of A W, in which learners ask questions,
+and then the multi-agent system (MAS) based on LLM obtains
+answers through A W. In the cycle of questions and answers, A W
+can enable learners to better improve educational practice. This
+study mainly focuses on exploring the development trend and ap-
+plication status of LLM and agents in education, and explores the
+application scenarios of AI for education based on the Agent4EDU
+education application framework. This study will provide new
+ideas and methods for the application of AI for education, and pro-
+mote technological innovation and paradigm change in the field of
+education.
+2 Paradigm Shift: Multi-agent systems drive AI
+change in education
+2.1 Emergence of Swarm Intelligence: the
+Transition from Single-Agent to
+Multi-Agent System
+Swarm intelligence (SI) originates from the study of social animal
+behavior. Individuals in these populations can generate powerful SI
+to deal with real-world problems through simple interaction rules
+of self-organization [2]. In MAS, multi-agent collaboration can also
+promote the emergence of SI [ 3]. Here, we formally describe the
+educational application of MAS using Equation 3), where n is the
+number of agents in MAS. These agents are coupled through A W
+and call LLMs to form and improve the final output. Multi-agent
+collaboration can effectively deal with complex problems in educa-
+tional scenarios, which exceeds the task processing capabilities of
+single-agent. The SI that emerges in MAS enables it to better meet
+the needs of learners.
+ 
+
+$DC?DC ) 402ℎ&(CD3 ~ = 443102: (* B4A, Í =
+8 = 164=C8
+(!!" (BB86=_D=2C8>= (=?DC, 8 ))))
+s.t.=?DC = D<0= (8340B, =443B 43D )
+(3)
+Agent, as a concept in the field of computer science, is defined
+as an entity that can perceive its environment and make decisions
+on its own. It is characterized by autonomy and flexibility and has
+been widely used in education. Specifically, in terms of learning
+methods, Bruner [ 4] and Ramadhevi [ 5] used agents to promote
+collaborative learning, which was achieved through agent-based
+simulation. Agents are also used to form the core of distance ed-
+ucation framework in order to provide personalized courses and
+learning experiences[6]. In terms of training applications, agent-
+based frameworks are also used to establish security training and
+corporate education to promote knowledge transfer [ 7-8]. Finally,
+in terms of educational support tools, Stummer[9], Walters [10] and
+181
+
+Agent4EDU: Advancing AI for Education with Agentic Workflows ICAIE 2024, November 22–24, 2024, Xiamen, China
+Winkler [11] have also developed agent-based models and technolo-
+gies that can adjust teaching tasks and improve students’ learning
+experience.
+As technology develops, learners’ educational needs are becom-
+ing more segmented and specific, which makes the complexity of
+educational tasks grow rapidly. Therefore, unlike single agents,
+MAS has also begun to be widely used in the field of education
+due to its stronger task processing capabilities in real scenarios.
+For example, the research of Xie [ 12], Nazir [13] and Molnar [ 14]
+revealed the great potential of MAS in improving teaching effi-
+ciency and optimizing resource allocation. Furthermore, the work
+of Boudabous [ 15], Singh [ 16] and Miura [ 17] further expanded
+the application of MAS in the field of education and promoted the
+development of AI for education.
+2.2 Transition of Paradigm: From Preset Models
+to LLM-Driven Evolution
+LLM-based MAS is designed to perceive the environment and make
+precise decisions based on perception to maximize its performance
+in real-world tasks. By using LLM as the core of systems for edu-
+cational purposes, these systems are able to perceive, reason, and
+make decisions and actions autonomously. LLM provides direct
+processing of natural language to efficiently solve educational tasks.
+This promotes the change of paradigm from preset models to LLM-
+driven evolution. For example, online writing platforms may have
+only been able to make revision suggestions based on semantics
+and polishing rules, but now they can use LLM-based MAS to gen-
+erate more specific revision suggestions, thereby effectively helping
+learners improve their writing skills.
+At present, the research and development of agent-based edu-
+cation systems mainly focuses on the education platforms devel-
+opment and learning analytics. In terms of education platform
+development , Khasianov [ 18] developed a multi-agent education
+platform that uses agents to enhance learners’ initiative and thus
+speed up their knowledge acquisition efficiency. In order to further
+improve the quality of teaching, Yan [19] developed an agent-based
+computer network-assisted teaching platform. In terms of learning
+analytics, Chen [ 20] and Simon [ 21] introduced agents to analyze
+public health and higher education systems, thereby providing
+traceable data support for policy making and long-term develop-
+ment. Hantono [ 22] and Bruner [ 23] discussed the potential of
+augmented reality and agent networks in improving learning effi-
+ciency and motivation.
+LLM can process complex natural language input and dynam-
+ically adjust responses based on context and user input, which
+makes LLM-based educational systems more practical. By inte-
+grating LLM-based agents in educational systems, those systems’
+language processing and flexible interaction capabilities are greatly
+enhanced. For example, Zheng et al. [ 24] used an LLM-supported
+embedded agent for language understanding and sub-goal plan-
+ning, and constructed semantic graphs through visual observation
+to obtain symbolic representations. MathBoard proposed by Jiang
+et al. [ 25] is based on LLM and gradually generates board writing
+(BW) by integrating a multi-agent collaborative framework, thereby
+effectively promoting learners’ knowledge construction.
+2.3 Knowledge Customization: Transitioning
+from General Domains to Subject-Specific
+Teaching
+At present, agent-based systems have been widely used in educa-
+tion, medicine, finance and other fields. In the field of information
+retrieval, Coneglian [ 26] used agents to effectively extract infor-
+mation to promote the efficiency and accuracy of information re-
+trieval. In the field of control engineering, Ma [ 27]’s research on
+multi-agent collaboration integrated the efficient task processing
+capabilities of agents into the control engineering classroom to im-
+prove the educational model. In the field of education, researchers
+such as Yang [ 28], Yonah [29], Alexandru [ 30], and Jawahar [ 31]
+used AI agents as core components of teaching platforms, providing
+learners with real-time feedback and personalized support to opti-
+mize the learning process and promote interaction. Furthermore,
+Gu [32]’s work on higher education simulation further verified the
+effectiveness of agents in educational system analysis.
+Focusing on the application of agents in the field of education,
+they can provide technical support for teaching scenarios such
+as personalized learning, automatic question and answer, and So-
+cratic guidance. Their application scope has gradually shifted from
+general knowledge fields to more targeted subject teaching. For
+example, Qi [33] proposed the IntelliChain framework, an educa-
+tional application framework for enhanced Socratic dialogue with
+LLMs and knowledge graphs. Xie [ 34] and Yan [ 35] focused on
+physical education, using a multi-agent teaching management sys-
+tem and a computer network-assisted teaching platform to promote
+the all-round development of students by improving teaching ef-
+ficiency. Samra [ 36] applied data mining agents and intelligent
+simulation technology to clinical skills education, improving clini-
+cal teaching effectiveness by optimizing the learning environment.
+Dubovi [ 37] used an interpretable agent-based model (ABM) to
+reveal the specific advantages of biological learning by making
+micro-mechanisms visible. Although agent technology has brought
+more flexible and personalized learning experiences to education
+and effectively improved the efficiency of teaching and learning
+[38], the ethical issues of these educational technologies must be
+considered to ensure the credibility and sustainable development
+of educational technologies [39-40].
+3 Agent4EDU supported Educational
+Application Framework
+The application of AI agents in the field of education has produced
+many specific cases, in which agents are often used to play roles
+such as instructors and study partners to promote learners’ knowl-
+edge construction process and provide timely emotional support
+to learners. To better analyze the application types of agents in
+education, we divide the educational applications of Agent4EDU
+into four levels according to the autonomy of agents and the depth
+of human-AI interaction, as shown in Figure 2, where the inter-
+action level is divided into general type, AI assistant, instruction
+executor and human-AI collaboration type from shallow to deep;
+the autonomy level is divided into general type, instruction ex-
+ecutor, human-AI collaboration and AI assistant from low to high
+[41]. Overall, the interaction depth and autonomy level of the
+182
+
+ICAIE 2024, November 22–24, 2024, Xiamen, China Ling Dai et al.
+Figure 2: Agent4EDU Educational Application Framework
+Agent4EDU framework show a progressive relationship, reflect-
+ing the differences in human-AI interaction modes in education.
+We believe that the proposed Agent4EDU framework will provide
+forward-looking guidance for the educational application of AI
+agents to promote the development of AI for education.
+3.1 Human-AI Collaboration
+Human-AI collaboration is defined as the highest level of interac-
+tion in the Agent4EDU framework. In this type, the AI represented
+by agents works closely with users, such as collaborating on a
+painting or art creation. In this mode, agents do not just respond
+to commands or provide basic learning support; instead, agents col-
+laborate and co-create with users in depth. The main task of agents
+is to identify learners’ learning needs and goals, interact through
+the user interface to obtain user input and feedback, and improve
+output based on this information to advance the improvement of
+educational tasks. The human-AI collaboration type is suitable for
+educational scenarios such as virtual laboratories and collabora-
+tive learning, which enhances the interactivity of learning, thereby
+potentially increasing learners’ enthusiasm and participation.
+3.2 AI Assistant
+The AI assistant type is at the highest level of autonomy, where
+agents can proactively make decisions and provide effective learn-
+ing support to learners. By analyzing learners’ learning data and
+behavior information, the AI assistant played by the agent can
+quickly understand the user’s needs and feedback, and create per-
+sonalized learning suggestions and learning resource suggestions
+based on the user’s preferences. When the AI assistant receives in-
+put or requests from learners, it can use its knowledge database and
+algorithms to analyze the input, generate suggestions in combina-
+tion with historical learning data, and wait for further feedback or
+requests until the learner makes a decision. This interactive process
+will continue until the problem is resolved. By providing precise
+and effective support, agents can bring a personalized learning
+experience to learners.
+3.3 Instruction Execution
+In the instruction execution mode, agents receive commands from
+learners and perform tasks as instructed. This makes the system
+functionality easy to implement. These agent-based educational
+applications can meet different learner needs and make the learning
+experience more personalized. The A W begins when the agent
+receives an explicit command from the learner. The agent looks
+183
+
+Agent4EDU: Advancing AI for Education with Agentic Workflows ICAIE 2024, November 22–24, 2024, Xiamen, China
+at the command to find the required action. It performs tasks
+such as searching for information or tutoring learners to complete
+homework. This mode is well suited for automated learning tasks
+such as vocabulary memorization and standardized testing, but it
+is weakly coupled with learners at the collaborative level.
+3.4 General Type
+General-type agents form the foundational layer. These agents
+provide basic educational resources and services, such as online
+courses and learning databases, and are able to perform routine
+tasks and simple requests. In this mode, agents can handle simple
+queries and interactions, and usually involve one-way information
+transfer. These agents have low autonomy. When learners’ requests
+are sent to agents, agents will call predefined functions or services to
+respond. The solutions it provides do not have complex processing
+and decision-making processes. This type of agent is suitable for
+providing basic learning resources, answering common questions,
+or providing course and grade information.
+4 Conclusion
+In this research, we review the efforts and achievements of agents
+in applying AI to education. It also introduces the Agent4EDU
+framework. By exploring the integration of large language models
+and agent technology, A Ws provide new solutions for personalized
+and adaptive learning, improve students’ learning efficiency and
+experience, reduce teachers’ workload, and promote continuous
+innovation in educational technology.
+Acknowledgments
+This work was partially supported by the Special Foundation for
+Interdisciplinary Talent Training in ”AI Empowered Psychology
+/ Education” of the School of Computer Science and Technology,
+East China Normal University, under the Grant 2024JCRC-03, and
+the Doctoral Research and Innovation Foundation of the School of
+Computer Science and Technology, East China Normal University,
+under the Grant 2023KYCX-03.
+References
+[1] Shi J, Zhao J, Wu X, Xu R, Jiang Y-H, He L. 2025. Mitigating reasoning hallucina-
+tion through multi-agent collaborative filtering. Expert Systems with Applica-
+tions, 263(2025), 125723. https://doi.org/10.1016/j.eswa.2024.125723
+[2] Chen Z-W, Tang K, Jiang, Y-H, Duan, B, Zhao C, Meng, C. 2025. MU-PTO: Multi-
+unmanned aerial vehicle supported passive tracking optimization for dynamic
+maritime lost items. Proceedings of the 2024 International Conference on In-
+dustrial Automation and Robotics, 24–29. New York, NY, USA: Association for
+Computing Machinery. https://doi.org/10.1145/3707402.3707407
+[3] Jiang Y-H, Shi J, Tu Y, Zhou Y, Zhang W, Wei Y. 2024. For learners: AI agent is
+all you need. In Wei Y, Qi C, Jiang Y-H, Dai L, editors, Enhancing educational
+practices: strategies for assessing and improving learning outcomes, 21–46. Nova
+Science Publishers. https://doi.org/10.52305/RUIG5131
+[4] Bruner L. 2023. A multi-agent modeling social network analysis of cooperative
+learning groups within a simulated adult education classroom learning environ-
+ment. Accessed: Mar. 22, 2024. [Online]. Available: https://tigerprints.clemson.
+edu/all_dissertations/3285
+[5] Ramadhevi M, Rajaprakash S. 2022. An overview on applications and develop-
+ments in education on agent based ontological cooperative learning. Journal of
+Pharmaceutical Negative Results, 723–728.
+[6] Zaytsev E, Khalabiya R, Stepanova I, Bunina L. 2021. Multi-agent system in virtual
+education. In INTED2021 Proceedings, IATED, 4501–4506.
+[7] Babalola A, Cheung C, Manu P, Yunusa-Kaltungo A. 2023. Development of a
+framework integrating agent-based modelling, building information modelling
+and immersive technologies for construction training and education. In Book of
+Proceedings, 471.
+[8] Yang J-S. 2022. Dynamics of firm’s investment in education and training: an agent-
+based approach. Comput Econ, 60(4): 1317–1351. https://doi.org/10.1007/s10614-
+021-10206-6
+[9] Stummer C, Kiesling E. 2021. An agent-based market simulation for enriching
+innovation management education. Cent Eur J Oper Res, 29(1): 143–161. https:
+//doi.org/10.1007/s10100-020-00716-3
+[10] Walters G. 2019. Evaluating conversation agent impact on student experi-
+ence in a distance education course. University of South Florida. Accessed:
+Mar. 22, 2024. [Online]. Available: https://search.proquest.com/openview/
+44b51fedd0ba26605e949da4fb469515
+[11] Winkler R, Hobert S, Salovaara A, Söllner M, Leimeister JM. 2020. Sara, the
+lecturer: improving learning in online education with a scaffolding-based con-
+versational agent. In Proceedings of the 2020 CHI Conference on Human Factors
+in Computing Systems, Honolulu HI USA: ACM, 1–14. https://doi.org/10.1145/
+3313831.3376781
+[12] Xie S, Xu J. 2023. Design and implementation of physical education teaching
+management system based on multi-agent model. Int J Comput Intell Syst, 16(1):
+172. https://doi.org/10.1007/s44196-023-00349-9
+[13] Nazir M, Noraziah A, Rahmah M. 2023. Students’ performance prediction in
+higher education using multi-agent framework-based distributed data mining
+approach: a review. International Journal of Virtual and Personal Learning Envi-
+ronments (IJVPLE), 13(1): 1–19.
+[14] Molnar A. 2023. Improved quality of online education using prioritized multi-
+agent reinforcement learning for video traffic scheduling. IEEE Transactions on
+Broadcasting. Accessed: Mar. 22, 2024. [Online]. Available: https://ieeexplore.
+ieee.org/abstract/document/10073590/
+[15] Boudabous S, Kazar O, Laouar MR, Eom SB. 2021. A multi-agent system for
+ubiquitous learning for hospital education. International Journal of Information
+Systems in the Service Sector (IJISSS), 13(3): 1–17.
+[16] Singh AK, Nag A, Karforma S, Mukhopadhyay S. 2019. Implementation of multi-
+agent based digital rights management system for distance education (DRMSDE)
+using JADE. International Journal of Advanced Computer Science and Applica-
+tions, 10(3).
+[17] Miura M. 2015. Project based learning with multi-agent simulation in liberal
+arts education. In 2015 3rd International Conference on Applied Computing
+and Information Technology/2nd International Conference on Computational
+Science and Intelligence, IEEE, 242–247.
+[18] Khasianov A, Suleymanov D, Marchenko A. 2017. Three agent platform approach
+for digital education environment. In INTED2017 Proceedings, IATED, 8580–8587.
+[19] Yan P. 2016. The research on the building of university physical education model
+based on the construction of computer multi-agent. Revista Ibérica de Sistemas e
+Tecnologias de Informação, 18A: 270.
+[20] Chen H-J, Xue H, Kumanyika S, Wang Y. 2017. School beverage environment
+and children’s energy expenditure associated with physical education class: an
+agent-based model simulation. Pediatric Obesity, 12(3): 203–212.
+[21] Simon N. 2016. Agent based modeling of development of Russian Federation
+higher education system. In INTED2016 Proceedings, IATED, 6869–6877.
+[22] Hantono BS, Nugroho LE, Santosa PI. 2016. Review of augmented reality agent
+in education. In 2016 6th International Annual Engineering Seminar (InAES),
+IEEE, 150–153.
+[23] Bruner L. 2023. A multi-agent modeling social network analysis of cooperative
+learning groups within a simulated adult education classroom learning environ-
+ment. Accessed: Mar. 22, 2024. Available: https://tigerprints.clemson.edu/all_
+dissertations/3285/
+[24] Zheng K, Zhou K, Gu J, Fan Y, Wang J, Di Z, Wang XE. 2022. Jarvis: A neuro-
+symbolic commonsense reasoning framework for conversational embodied
+agents. arXiv preprint arXiv:2208.13266.
+[25] Jiang Y-H, Li R, Wei Y, Jia R, Shao X, Hu H, Jiang B. 2024. Synchronizing verbal
+responses and board writing for multimodal math instruction with LLMs. In The
+4th Workshop on Mathematical Reasoning and AI at NeurIPS’24, Vancouver,
+Canada, 46–59, https://openreview.net/forum?id$=$esbIrV8N12
+[26] Coneglian CS, Fusco E, de Castro Botega L. 2014. Using ontological semantic agent
+to data extraction in the context of big data: a tool applied to higher education
+institutions. In Proceedings of the International Conference on Semantic Web
+and Web Services (SWWS), The Steering Committee of The World Congress in
+Computer Science, Computer, 1–6.
+[27] Ma JH, Zhang H, He BF. 2014. Applied-information technology with multi-agent
+cooperation in education model control engineering. Applied Mechanics and
+Materials, 662: 255–258.
+[28] Yang LP, Xu DW, Wang W. 2014. The application of intelligent agent in net-
+work platform for undergraduate’s innovation and entrepreneurship education.
+Applied Mechanics and Materials, 687: 2149–2152.
+[29] Yonah E. 2014. A multi-agent system to support ICT-based distance learning
+through modeling of learner needs: the case of Bachelor of Education at Uni-
+versity of Nairobi. PhD Thesis, University of Nairobi. Accessed: Mar. 22, 2024.
+Available: http://erepository.uonbi.ac.ke/handle/11295/73675
+184
+
+ICAIE 2024, November 22–24, 2024, Xiamen, China Ling Dai et al.
+[30] Alexandru A, Tirziu E, Tudora E, Bica O, “Enhanced education by using intelligent
+agents in multi-agent adaptive e-learning systems, ” Studies in Informatics and
+Control, vol. 24, no. 1, pp. 13–22, 2015.
+[31] Jawahar J, “A study on role of intelligent agent in education, ” International Journal
+of Applied Engineering Research, vol. 10, no. 76, pp. 497–501, 2015.
+[32] Gu X, Blackmore KL. 2015. A systematic review of agent-based modelling and sim-
+ulation applications in the higher education domain. Higher Education Research
+& Development, 34(5): 883–898. https://doi.org/10.1080/07294360.2015.1011088
+[33] Qi C, Jia L, Wei Y, Jiang Y-H, Gu X. 2024. IntelliChain: An integrated framework
+for enhanced Socratic method dialogue with LLMs and knowledge graphs. In
+Conference Proceedings of the 28th Global Chinese Conference on Computers
+in Education (GCCCE 2024). Chongqing, China, Global Chinese Conference on
+Computers in Education, 116–121.
+[34] Xie S, Xu J. 2023. Design and implementation of physical education teaching
+management system based on multi-agent model. Int J Comput Intell Syst, 16(1):
+172. https://doi.org/10.1007/s44196-023-00349-9
+[35] Yan P. 2016. The research on the building of university physical education model
+based on the construction of computer multi-agent. Revista Ibérica de Sistemas e
+Tecnologias de Informação, 18A: 270.
+[36] Samra HE, Li AS, Soh B, Alzain MA. 2016. A conceptual model for an intelligent
+simulation-based learning management system using a data mining agent in
+clinical skills education. In 2016 4th International Conference on Enterprise
+Systems (ES), IEEE, 81–88.
+[37] Dubovi I, Lee V. 2018. Agent-based models to support bioscience learning in
+nursing education. International Society of the Learning Sciences, Inc.[ISLS].
+Accessed: Mar. 22, 2024. Available: https://repository.isls.org/handle/1/557
+[38] Zhuang X, Wu H, Shen X, Yu P, Yi G, Chen X, Hu T, Chen Y, Ren Y, Zhang Y, Song
+Y, Liu B, Lan M. 2024. TOREE: Evaluating topic relevance of student essays for
+Chinese primary and middle school education. In Findings of the Association for
+Computational Linguistics ACL 2024, edited by Ku L-W, Martins A, Srikumar V,
+5749–65. Bangkok, Thailand and virtual meeting: Association for Computational
+Linguistics.
+[39] Chan A, Salganik R, Markelius A, Pang C, Rajkumar N, Krasheninnikov D, Lan-
+gosco L, He Z, Duan Y, Carroll M. 2023. Harms from Increasingly Agentic Algo-
+rithmic Systems. In Proceedings of the 2023 ACM Conference on Fairness, Ac-
+countability, and Transparency, 651–666. https://doi.org/10.1145/3593013.3594033
+[40] Wang, W, Tu, Y, Song, L, Zheng, J, Wang, T. 2021. An Adaptive Design for
+Item Parameter Online Estimation and Q-Matrix Online Calibration in CD-CAT.
+Frontiers in Psychology, 12. https://doi.org/10.3389/fpsyg.2021.710497
+[41] Jiang Y-H, Liu T-Y, Zhuang X, Hu H, Li R, Jia R. 2024. Enhancing educational
+practices with multi-agent systems: A review. In Wei Y, Qi C, Jiang Y-H, Dai L,
+editors, Enhancing Educational Practices: Strategies for Assessing and Improving
+Learning Outcomes, 47–65. Nova Science Publishers. https://doi.org/10.52305/
+RUIG5131
+185
