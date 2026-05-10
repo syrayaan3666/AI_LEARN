@@ -12,6 +12,6 @@ public class DataBootstrapConfig {
     public CommandLineRunner seedDefaultStudent(JdbcTemplate jdbcTemplate) {
         return args -> jdbcTemplate.update(
                 "INSERT INTO users (id, name, email, password) VALUES (1, 'Demo Student', 'student1@ailearn.local', 'local-dev-only') "
-                        + "ON DUPLICATE KEY UPDATE name = name");
+                        + "ON CONFLICT (id) DO NOTHING");
     }
 }
