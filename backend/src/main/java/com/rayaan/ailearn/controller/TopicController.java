@@ -14,7 +14,7 @@ import com.rayaan.ailearn.dto.response.TopicResponse;
 import com.rayaan.ailearn.service.learning.TopicContentService;
 
 @RestController
-@RequestMapping
+@RequestMapping("")
 public class TopicController {
 
     private final TopicContentService topicContentService;
